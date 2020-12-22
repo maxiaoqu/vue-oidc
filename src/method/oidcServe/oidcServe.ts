@@ -8,25 +8,23 @@ export const mgr = () => {
   }
 
   oidcMgr = new UserManager({
-    // authority: 'http://139.224.255.200:3010',
-    // client_id: 'platform-vue',
-    // response_type: 'code',
-    // redirect_uri: 'http://example.maxiaoqu.com/oidc/#/oidc-callback',
-    // silent_redirect_uri: 'http://example.maxiaoqu.com/oidc/#/oidc-callback',
-    // post_logout_redirect_uri: 'http://example.maxiaoqu.com/oidc/#/oidc-logout',
-    // scope: 'address phone email openid profile role area areaCode organizeName workNo BackendAdminAppGateway IdentityService FileService PlatformService MessageService'
-
-    // 其他测试环境
     authority: 'https://demo.identityserver.io/',
     client_id: 'interactive.public',
-    redirect_uri: 'http://example.maxiaoqu.com/oidc/#/oidc-callback',
-    post_logout_redirect_uri: 'http://example.maxiaoqu.com/oidc/#/oidc-callback',
-    silent_redirect_uri: 'http://example.maxiaoqu.com/oidc/#/oidc-callback',
     response_type: 'code',
     scope: 'openid profile email api offline_access',
     automaticSilentRenew: true,
     // @ts-ignore
-    automaticSilentSignin: true
+    automaticSilentSignin: true,
+
+    // 线上环境
+    // redirect_uri: 'http://example.maxiaoqu.com/oidc/#/oidc-callback',
+    // post_logout_redirect_uri: 'http://example.maxiaoqu.com/oidc/#/oidc-callback',
+    // silent_redirect_uri: 'http://example.maxiaoqu.com/oidc/#/oidc-callback',
+
+    // 测试环境
+    redirect_uri: 'http://localhost:8090/#/oidc-callback',
+    post_logout_redirect_uri: 'http://localhost:8090/oidc/#/oidc-callback',
+    silent_redirect_uri: 'http://localhost:8090/oidc/#/oidc-callback',
   })
 
   oidcMgr.events.addUserLoaded(function (user) {

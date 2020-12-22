@@ -5,10 +5,19 @@ export const baseRoutes: RouteConfig[] = [
   {
     path: '/',
     name: 'index',
-    redirect: '/oidc-callback',
+    redirect: '/oidc-login',
     meta: {
       title: '首页'
     }
+  }, {
+    path: '/oidc-login',
+    name: 'oidc-login',
+    meta: {
+      icon: 'icon-name',
+      hidden: true,
+      title: '单点登录回调页面'
+    },
+    component: () => import('@/views/oidcLogin.vue')
   }, {
     path: '/oidc-callback',
     name: 'oidc-callback',

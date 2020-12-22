@@ -4,8 +4,6 @@
 import common from '../common/index'
 import {mgr} from './oidcServe'
 import {clearStorage} from "../clearLocal";
-import {UserManager} from 'oidc-client'
-import Vue from "vue";
 
 const userInfo: string = 'USERINFO'
 
@@ -19,26 +17,24 @@ const oidcServe = {
   // Renew the token manually
   signinRedirectCallback() {
     return new Promise((resolve, reject) => {
-      new UserManager({response_mode: "query"}).signinRedirectCallback().then(function (user) {
-        sessionStorage.setItem(userInfo, JSON.stringify(user.profile))
+      this.init().signinRedirectCallback().then(function (user) {
+        sessionStorage.setItem(userInfo, JSON.stringify(user))
         let USERKEY = sessionStorage.getItem("USERKEY");
-        if (!Vue.prototype.$Oidc.autoSignout) USERKEY = "";
         // 假如存在
         if (USERKEY && (USERKEY === user.profile.sub)) {
           sessionStorage.setItem("USERKEY", user.profile.sub)
           let url = common.getUrl();
-          if (!url) url = "http://www.baidu.com";
+          if (!url) url = "http://example.maxiaoqu.com/bigData/";
           (window as any).location.href = url;
           console.log('signinRedirectCallback has userkey', url)
         } else {
           // @ts-ignore
           sessionStorage.setItem("USERKEY", user.profile.sub);
-          (window as any).location.href = "http://www.baidu.com";
+          (window as any).location.href = "http://example.maxiaoqu.com/bigData/";
           console.log('signinRedirectCallback no userkey')
         }
       }).catch(function (err) {
-        console.log('signinRedirectCallback err', err);
-        (window as any).location.href = "http://www.baidu.com";
+        console.log('signinRedirectCallback err', err)
       });
     })
   },
